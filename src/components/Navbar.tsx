@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Logo from "../../public/logo-icon.png";
+import TodayDate from "./ToDayDate";
 
 const Navbar = () => {
-  
-  const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
-
   return (
     <div className="container mx-auto mt-5 flex justify-between">
       {/* Left side: Logo image and text, date */}
@@ -18,7 +16,7 @@ const Navbar = () => {
         </div>
         <div>
           <h2 className="font-bold text-2xl">বাজার দর</h2>
-          <p>{date}</p>
+          <TodayDate></TodayDate>
         </div>
       </div>
       {/* Right side Sign-In and Sign-up */}
