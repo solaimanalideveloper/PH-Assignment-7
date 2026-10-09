@@ -1,10 +1,15 @@
-import Hero from "@/components/Hero";
+import HeroSection from "@/components/Hero";
+import NavItem from "@/components/NavItem";
+import PriceTicker from "@/components/PriceTicker";
 
 
 export default function Home() {
   return (
     <div>
-    <Hero></Hero>
+      <NavItem></NavItem>
+    <PriceTicker></PriceTicker>
+    <HeroSection></HeroSection>
+    
     </div>
   );
 }

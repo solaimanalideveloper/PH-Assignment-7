@@ -2,6 +2,7 @@ import Image from "next/image";
 import Logo from "../../public/logo-icon.png";
 
 const Navbar = () => {
+  
   const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
 
   return (
