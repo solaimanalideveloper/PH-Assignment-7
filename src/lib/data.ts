@@ -20,3 +20,13 @@ export async function getProducts() {
   if (!res.ok) throw new Error("Categories fetch failed");
   return res.json();
 }
+
+export async function getAllProducts() {
+  cacheLife("minutes");
+
+  const res = await fetch(
+    "https://api.api-store.workers.dev/api/bazardor/products",
+  );
+  if (!res.ok) throw new Error("Categories fetch failed");
+  return res.json();
+}
