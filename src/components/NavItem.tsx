@@ -1,3 +1,5 @@
+import { getCategories } from "@/lib/data";
+
 interface Cate {
   nameBn: string;
   icon: string;
@@ -5,11 +7,7 @@ interface Cate {
 }
 
 const NavItem = async () => {
-  const res = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/categories",
-  );
-  const data = await res.json();
-  // console.log("categories data : ", data);
+  const data = await getCategories();
 
   return (
     <div className="container mx-auto my-5">

@@ -11,7 +11,7 @@ const TodayDate = () => {
     () => "",
   );
 
-  return <p>{date}</p>;
+  return <p className="my-2 text-2xl font-semibold text-[#05893E]">{date}</p>;
 };
 
 export default TodayDate;

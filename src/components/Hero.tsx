@@ -3,14 +3,11 @@ import Hero from "../../public/bazar-hero.png";
 import TodayDate from "./ToDayDate";
 
 const HeroSection = () => {
-
   return (
     <div className="bg-green-100 py-15">
       <div className="container mx-auto flex justify-between bg-white  rounded-3xl ">
         <div className="ml-3">
-          <p className="my-2 text-2xl font-semibold text-[#05893E]">
-            <TodayDate></TodayDate>
-          </p>
+          <TodayDate></TodayDate>
           <h1 className="font-bold text-4xl mb-5">আজকের বাজারের দাম এক নজরে</h1>
           <p className="mb-5 ">
             চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক

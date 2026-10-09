@@ -1,5 +1,6 @@
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
+import { getProducts } from "@/lib/data";
 
 interface Product {
   id: number;
@@ -12,17 +13,12 @@ interface Product {
 }
 
 const PriceTicker = async () => {
-  const res = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/products",
-  );
-  const data = await res.json();
-  console.log("marquee data", data);
+  const data = await getProducts();
 
   return (
     <MarqueeText direction="right" duration={10}>
       <div className="border border-amber-200 py-3">
         {data.map((span: Product) => (
-          
           <span key={span.id} className="">
             <span className="mx-5">
               <span className="text-1.5xl">{span.categoryIcon}</span>
