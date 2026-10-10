@@ -6,9 +6,6 @@ import Link from "next/link";
 const Navbar = () => {
   const links1 = (
     <>
-      {/* <li>
-        <Link href="/sign-in">সাইন ইন</Link>
-      </li> */}
       <li>
         <Link href="/sign-up">সাইন আপ</Link>
       </li>
@@ -19,9 +16,6 @@ const Navbar = () => {
       <li>
         <Link href="/sign-in">সাইন ইন</Link>
       </li>
-      {/* <li>
-        <Link href="/sign-up">সাইন আপ</Link>
-      </li> */}
     </>
   );
   return (

@@ -1,9 +1,9 @@
-import { getAllProducts } from "@/lib/data";
+import { getProducts } from "@/lib/data";
 import { Product } from "@/types/product";
 import ProductItem from "./ProductItem";
 
 const ProductCard = async () => {
-  const all: Product[] = await getAllProducts();
+  const all: Product[] = await getProducts();
   const upItems = all.filter((p) => p.change?.dir === "up");
   const downItems = all.filter((p) => p.change?.dir === "down");
 

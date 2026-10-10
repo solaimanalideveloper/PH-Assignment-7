@@ -1,22 +1,22 @@
+import Link from "next/link";
 import { getCategories } from "@/lib/data";
-
-interface Cate {
-  nameBn: string;
-  icon: string;
-  id: string;
-}
+import { Category } from "@/types/product";
 
 const NavItem = async () => {
-  const data = await getCategories();
+  const categories = await getCategories();
 
   return (
     <div className="container mx-auto my-5">
-      <div>
-        {data.map((cat: Cate) => (
-          <span key={cat.id} className="mx-3 font-semibold">
+      <div className="flex">
+        {categories.map((cat: Category) => (
+          <Link
+            key={cat.slug}
+            href={`/category/${cat.slug}`}
+            className="mx-3 flex items-center font-semibold"
+          >
             <span className="mx-2">{cat.icon}</span>
             <span>{cat.nameBn}</span>
-          </span>
+          </Link>
         ))}
       </div>
     </div>

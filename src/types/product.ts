@@ -24,3 +24,10 @@ export type Product = {
   };
   markets: Market[];
 };
+
+export type Category = {
+  slug: string;
+  nameBn: string;
+  icon: string;
+  count: number;
+};

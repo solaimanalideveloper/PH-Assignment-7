@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Product } from "@/types/product";
+import ChangeBadge from "./ChangeBadge";
 
 const ProductItem = ({ product }: { product: Product }) => {
   return (
@@ -20,7 +21,7 @@ const ProductItem = ({ product }: { product: Product }) => {
         <h2 className="font-bold">
           {product.today} <span>টাকা</span>
         </h2>
-        <p className="font-bold">{product.change.pct}</p>
+        <ChangeBadge dir={product.change.dir} pct={product.change.pct} />
       </div>
     </Link>
   );
