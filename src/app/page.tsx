@@ -1,6 +1,5 @@
 import HeroSection from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
-import CategoryDetailPage from "./category/[slug]/page";
 
 
 export default function Home() {
@@ -8,7 +7,6 @@ export default function Home() {
     <div>
     <HeroSection></HeroSection>
     <ProductCard></ProductCard>
-    <CategoryDetailPage></CategoryDetailPage>
     </div>
   );
 }
