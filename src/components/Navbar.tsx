@@ -1,12 +1,33 @@
 import Image from "next/image";
 import Logo from "../../public/logo-icon.png";
 import TodayDate from "./ToDayDate";
+import Link from "next/link";
 
 const Navbar = () => {
+  const links1 = (
+    <>
+      {/* <li>
+        <Link href="/sign-in">সাইন ইন</Link>
+      </li> */}
+      <li>
+        <Link href="/sign-up">সাইন আপ</Link>
+      </li>
+    </>
+  );
+  const links2 = (
+    <>
+      <li>
+        <Link href="/sign-in">সাইন ইন</Link>
+      </li>
+      {/* <li>
+        <Link href="/sign-up">সাইন আপ</Link>
+      </li> */}
+    </>
+  );
   return (
     <div className="container mx-auto mt-5 flex justify-between">
       {/* Left side: Logo image and text, date */}
-      <div className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2 cursor-pointer">
         <div>
           <Image
             src={Logo}
@@ -18,11 +39,11 @@ const Navbar = () => {
           <h2 className="font-bold text-2xl">বাজার দর</h2>
           <TodayDate></TodayDate>
         </div>
-      </div>
+      </Link>
       {/* Right side Sign-In and Sign-up */}
       <div className="flex gap-2 items-center">
-        <button className="btn font-semibold text-[18px]">সাইন ইন</button>
-        <button className="btn font-semibold text-[18px]">সাইন আপ</button>
+        <ul className="btn font-semibold text-[18px]">{links2}</ul>
+        <ul className="btn font-semibold text-[18px]">{links1}</ul>
       </div>
     </div>
   );
