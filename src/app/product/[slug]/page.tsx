@@ -62,7 +62,6 @@ const ProductDetailsPage = async ({
         › <span className="text-gray-800">{product.nameBn}</span>
       </nav>
 
-      {/* সামারি */}
       <section className="mb-6 flex flex-col gap-4 rounded-xl border bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-start gap-4">
           <div className="text-5xl">{product.image}</div>
@@ -99,20 +98,18 @@ const ProductDetailsPage = async ({
         </div>
       </section>
 
-      {/* দামের সারসংক্ষেপ */}
       <section className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat label="সর্বনিম্ন দাম" value={lowest} color="text-green-700" />
         <Stat label="সর্বাধিক দাম" value={highest} color="text-red-600" />
         <Stat label="গড় দাম" value={average} color="text-gray-900" />
       </section>
 
-      {/* বাজারভিত্তিক দাম */}
       <section className="rounded-xl border bg-white p-4 sm:p-6">
         <h2 className="mb-4 font-semibold">বাজারভিত্তিক আজকের দাম</h2>
 
         {hasMarkets ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[480px] text-sm">
+            <table className="w-full min-w-120 text-sm">
               <thead className="bg-gray-50 text-left">
                 <tr>
                   <th className="p-3">বাজার</th>

@@ -19,7 +19,7 @@ const HeroSection = () => {
           <HeroButton />
         </div>
 
-        <div className="w-full max-w-[220px] shrink-0 sm:max-w-xs md:max-w-sm">
+        <div className="w-full max-w-55 shrink-0 sm:max-w-xs md:max-w-sm">
           <Image
             src={HeroImg}
             alt="বাজারের পণ্যের ছবি"

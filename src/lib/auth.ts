@@ -5,7 +5,6 @@ import { betterAuth } from "better-auth";
 const uri = process.env.BETTER_AUTH_MONGODB_URL;
 if (!uri) throw new Error("BETTER_AUTH_MONGODB_URL সেট করা নেই");
 
-// dev মোডে hot reload এ নতুন ক্লায়েন্ট বানিয়ে পুরনোটা বন্ধ হওয়া ঠেকায়
 const globalForMongo = globalThis as unknown as {
   _mongoClient?: MongoClient;
 };

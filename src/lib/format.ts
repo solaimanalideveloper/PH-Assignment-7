@@ -3,7 +3,6 @@ const BN_DIGITS = "০১২৩৪৫৬৭৮৯";
 export const toBn = (n: number | string) =>
   String(n).replace(/\d/g, (d) => BN_DIGITS[+d]);
 
-// ১৪৮ বা ১,৮৫০ (হাজারে কমাসহ)
 export const formatPrice = (n: number | string) =>
   toBn(Number(n).toLocaleString("en-US"));
 
