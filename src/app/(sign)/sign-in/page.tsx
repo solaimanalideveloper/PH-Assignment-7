@@ -1,8 +1,9 @@
 "use client";
+
+import { useState, type FormEvent } from "react";
 import { signIn } from "@/lib/auth-client";
 import {
   Button,
-  Description,
   FieldError,
   Form,
   Input,
@@ -10,102 +11,106 @@ import {
   TextField,
 } from "@heroui/react";
 
-const SignUp = () => {
-  const handelUpDateUser = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    console.log("data from the form: ", data);
+type SignInFormData = {
+  email: string;
+  password: string;
+};
 
-    const { data: resData, error } = await signIn.email({
+type SocialProvider = "google" | "github";
+
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const handleEmailSignIn = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(
+      formData.entries(),
+    ) as unknown as SignInFormData;
+
+    const { error } = await signIn.email({
       email: data.email,
       password: data.password,
       rememberMe: true,
       callbackURL: "/",
     });
-    console.log("the resData: ", resData, error);
+
+    if (error) {
+      setErrorMsg(error.message ?? "সাইন ইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+    }
+    setLoading(false);
   };
 
-  const handelSignUpGoogle = async () => {
-    const resData = await signIn.social({
-      provider: "google",
+  const handleSocialSignIn = async (provider: SocialProvider) => {
+    setErrorMsg(null);
+    const { error } = await signIn.social({
+      provider,
+      callbackURL: "/",
     });
-    console.log("the handel signUp button with google: ", resData);
-  };
-
-  const handelSignUpGithub = async () => {
-    const resData = await signIn.social({
-      provider: "github",
-    });
+    if (error) {
+      setErrorMsg(error.message ?? "সাইন ইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+    }
   };
 
   return (
-    <div className="bg-green-100 ">
-      <div className="container mx-auto my-10 ">
+    <div className="bg-green-100">
+      <div className="container mx-auto my-10">
         <div>
           <h1 className="font-bold text-3xl text-center my-5">সাইন ইন</h1>
           <p className="mb-5 text-center">
             বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
           </p>
         </div>
+
         <Form
-          className="flex w-96 flex-col gap-4 border-amber-50 bg-white py-10 px-5 rounded-2xl mx-auto"
-          onSubmit={handelUpDateUser}
+          className="flex w-96 flex-col gap-4 bg-white py-10 px-5 rounded-2xl mx-auto"
+          onSubmit={handleEmailSignIn}
         >
           <TextField
             isRequired
             name="email"
             type="email"
-            validate={(value) => {
-              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                return "Please enter a valid email address";
-              }
-              return null;
-            }}
+            validate={(value) =>
+              EMAIL_REGEX.test(value) ? null : "সঠিক ইমেইল ঠিকানা দিন"
+            }
           >
             <Label>ইমেইল</Label>
             <Input placeholder="ইমেইল" />
             <FieldError />
           </TextField>
-          <TextField
-            isRequired
-            minLength={8}
-            name="password"
-            type="password"
-            validate={(value) => {
-              if (value.length < 8) {
-                return "Password must be at least 8 characters";
-              }
-              if (!/[A-Z]/.test(value)) {
-                return "Password must contain at least one uppercase letter";
-              }
-              if (!/[0-9]/.test(value)) {
-                return "Password must contain at least one number";
-              }
-              return null;
-            }}
-          >
+
+          <TextField isRequired name="password" type="password">
             <Label>পাসওয়ার্ড</Label>
             <Input placeholder="পাসওয়ার্ড" />
-            <Description>
-              Must be at least 8 characters with 1 uppercase and 1 number
-            </Description>
             <FieldError />
           </TextField>
+
+          {errorMsg && (
+            <p className="text-red-600 text-sm" role="alert">
+              {errorMsg}
+            </p>
+          )}
+
           <div className="flex gap-2">
-            <Button type="submit">সাবমিট </Button>
-            <Button type="reset" variant="secondary">
-              রিসেট
+            <Button type="submit" isDisabled={loading}>
+              {loading ? "অপেক্ষা করুন..." : "সাবমিট"}
             </Button>
           </div>
 
-          <p className="text-center m">অথবা</p>
+          <p className="text-center">অথবা</p>
+
           <div className="flex gap-2">
-            <Button onClick={handelSignUpGoogle}>
-              Google দিয়ে চালিয়ে যান
+            <Button onPress={() => handleSocialSignIn("google")}>
+              Google
             </Button>
-            <Button onClick={handelSignUpGithub}>
-              GitHub দিয়ে চালিয়ে যান
+            <Button onPress={() => handleSocialSignIn("github")}>
+              GitHub
             </Button>
           </div>
         </Form>
@@ -114,4 +119,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

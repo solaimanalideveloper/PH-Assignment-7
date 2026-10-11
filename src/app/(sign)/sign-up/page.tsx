@@ -1,5 +1,12 @@
 "use client";
+
+import { useState, type FormEvent } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from "../../../lib/validation";
 import {
   Button,
   Description,
@@ -10,38 +17,57 @@ import {
   TextField,
 } from "@heroui/react";
 
-const SignUp = () => {
-  const handelUpDateUser = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    console.log("data from the form: ", data);
+type SignUpFormData = {
+  name: string;
+  email: string;
+  password: string;
+};
 
-    const { data: resData, error } = await signUp.email({
-      name: data.name,
+type SocialProvider = "google" | "github";
+
+const GENERIC_ERROR = "অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।";
+
+const SignUp = () => {
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const handleEmailSignUp = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(
+      formData.entries(),
+    ) as unknown as SignUpFormData;
+
+    const { error } = await signUp.email({
+      name: data.name.trim(),
       email: data.email,
       password: data.password,
-      rememberMe: true,
       callbackURL: "/",
     });
-    console.log("the resData: ", resData, error);
+
+    if (error) {
+      setErrorMsg(error.message ?? GENERIC_ERROR);
+    }
+    setLoading(false);
   };
 
-  const handelSignUpGoogle = async () => {
-    const resData = await signIn.social({
-      provider: "google",
+  const handleSocialSignIn = async (provider: SocialProvider) => {
+    setErrorMsg(null);
+    const { error } = await signIn.social({
+      provider,
+      callbackURL: "/",
     });
-    console.log("the handel signUp button with google: ", resData);
+    if (error) {
+      setErrorMsg(error.message ?? GENERIC_ERROR);
+    }
   };
 
-  const handelSignUpGithub = async () => {
-    const resData = await signIn.social({
-      provider: "github",
-    });
-  };
   return (
-    <div className="bg-green-100 ">
-      <div className="container mx-auto my-10 ">
+    <div className="bg-green-100">
+      <div className="container mx-auto my-10">
         <div>
           <h1 className="font-bold text-3xl text-center my-5">
             অ্যাকাউন্ট তৈরি করুন
@@ -50,79 +76,60 @@ const SignUp = () => {
             বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
           </p>
         </div>
+
         <Form
-          className="flex w-96 flex-col gap-4 border-amber-50 bg-white py-10 px-5 rounded-2xl mx-auto"
-          onSubmit={handelUpDateUser}
+          className="flex w-96 flex-col gap-4 bg-white py-10 px-5 rounded-2xl mx-auto"
+          onSubmit={handleEmailSignUp}
         >
-          <TextField
-            isRequired
-            name="name"
-            validate={(value) => {
-              if (value.length < 3) {
-                return "Name must be at least 3 characters";
-              }
-              return null;
-            }}
-          >
+          <TextField isRequired name="name" validate={validateName}>
             <Label>নাম</Label>
             <Input placeholder="নাম" />
             <FieldError />
           </TextField>
+
           <TextField
             isRequired
             name="email"
             type="email"
-            validate={(value) => {
-              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                return "Please enter a valid email address";
-              }
-              return null;
-            }}
+            validate={validateEmail}
           >
             <Label>ইমেইল</Label>
             <Input placeholder="ইমেইল" />
             <FieldError />
           </TextField>
+
           <TextField
             isRequired
             minLength={8}
             name="password"
             type="password"
-            validate={(value) => {
-              if (value.length < 8) {
-                return "Password must be at least 8 characters";
-              }
-              if (!/[A-Z]/.test(value)) {
-                return "Password must contain at least one uppercase letter";
-              }
-              if (!/[0-9]/.test(value)) {
-                return "Password must contain at least one number";
-              }
-              return null;
-            }}
+            validate={validatePassword}
           >
             <Label>পাসওয়ার্ড</Label>
             <Input placeholder="পাসওয়ার্ড" />
             <Description>
-              Must be at least 8 characters with 1 uppercase and 1 number
+              কমপক্ষে ৮ অক্ষর, ১টি বড় হাতের অক্ষর ও ১টি সংখ্যা থাকতে হবে
             </Description>
             <FieldError />
           </TextField>
-          <div className="flex gap-2">
-            <Button type="submit">সাবমিট </Button>
-            <Button type="reset" variant="secondary">
-              রিসেট
+
+          {errorMsg && (
+            <p className="text-red-600 text-sm" role="alert">
+              {errorMsg}
+            </p>
+          )}
+
+          <div className="w-96">
+            <Button type="submit" isDisabled={loading}>
+              {loading ? "অপেক্ষা করুন..." : "সাবমিট"}
             </Button>
           </div>
 
-          <p className="text-center m">অথবা</p>
+          <p className="text-center">অথবা</p>
+
           <div className="flex gap-2">
-            <Button onClick={handelSignUpGoogle}>
-              Google দিয়ে চালিয়ে যান
-            </Button>
-            <Button onClick={handelSignUpGithub}>
-              GitHub দিয়ে চালিয়ে যান
-            </Button>
+            <Button onPress={() => handleSocialSignIn("google")}>Google</Button>
+            <Button onPress={() => handleSocialSignIn("github")}>GitHub</Button>
           </div>
         </Form>
       </div>
