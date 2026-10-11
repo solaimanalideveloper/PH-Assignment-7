@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
 
 const AuthButtons = () => {

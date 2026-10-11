@@ -25,6 +25,7 @@ const githubSecret = process.env.GITHUB_CLIENT_SECRET;
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
+    autoSignIn: false,
   },
   socialProviders: {
     ...(googleId && googleSecret

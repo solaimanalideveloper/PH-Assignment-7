@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NavItem from "@/components/NavItem";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <NavItem />
         </Suspense>
         <main className="flex-1">{children}</main>
-        <ToastContainer position="top-right" autoClose={3000} />
+        <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
         <Footer />
       </body>
     </html>
