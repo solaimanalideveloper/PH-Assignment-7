@@ -2,22 +2,9 @@ import Image from "next/image";
 import Logo from "../../public/logo-icon.png";
 import TodayDate from "./ToDayDate";
 import Link from "next/link";
+import AuthButtons from "./AuthButtons";
 
 const Navbar = () => {
-  const links1 = (
-    <>
-      <li>
-        <Link href="/sign-up">সাইন আপ</Link>
-      </li>
-    </>
-  );
-  const links2 = (
-    <>
-      <li>
-        <Link href="/sign-in">সাইন ইন</Link>
-      </li>
-    </>
-  );
   return (
     <div className="container mx-auto mt-5 flex justify-between">
       {/* Left side: Logo image and text, date */}
@@ -34,10 +21,10 @@ const Navbar = () => {
           <TodayDate></TodayDate>
         </div>
       </Link>
-      {/* Right side Sign-In and Sign-up */}
+
+      {/* Right side: লগইন অবস্থা অনুযায়ী বাটন বা ইউজার মেনু */}
       <div className="flex gap-2 items-center">
-        <ul className="btn font-semibold text-[18px]">{links2}</ul>
-        <ul className="btn font-semibold text-[18px]">{links1}</ul>
+        <AuthButtons />
       </div>
     </div>
   );
