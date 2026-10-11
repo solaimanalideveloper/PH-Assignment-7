@@ -1,19 +1,27 @@
+import { formatPct } from "@/lib/format";
+
 type Props = {
-  dir: "up" | "down" | "flat";
-  pct: number;
+  dir?: string;
+  pct?: number | string;
 };
 
-const ChangeBadge = ({ dir, pct }: Props) => {
-  const styles = {
-    up: "bg-red-50 text-red-600",
-    down: "bg-green-50 text-green-600",
-    flat: "bg-gray-100 text-gray-500",
-  };
-  const icon = dir === "up" ? "▲" : dir === "down" ? "▼" : "—";
+const ChangeBadge = ({ dir, pct = 0 }: Props) => {
+  const isUp = dir === "up";
+  const isDown = dir === "down";
+
+  const style = isUp
+    ? "bg-green-50 text-green-700"
+    : isDown
+      ? "bg-red-50 text-red-600"
+      : "bg-gray-100 text-gray-500";
+  const arrow = isUp ? "▲" : isDown ? "▼" : "—";
 
   return (
-    <span className={`rounded-full px-2 py-1 text-xs font-bold ${styles[dir]}`}>
-      {icon} {Math.abs(pct)}%
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${style}`}
+    >
+      <span>{arrow}</span>
+      <span>{formatPct(pct)}%</span>
     </span>
   );
 };

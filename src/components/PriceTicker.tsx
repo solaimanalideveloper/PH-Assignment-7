@@ -14,9 +14,9 @@ const PriceTicker = async () => {
           const dir = p.change?.dir;
           const color =
             dir === "up"
-              ? "text-red-600"
+              ? "text-green-700"
               : dir === "down"
-                ? "text-green-700"
+                ? "text-red-600"
                 : "text-gray-500";
           const arrow = dir === "up" ? "▲" : dir === "down" ? "▼" : "—";
 
