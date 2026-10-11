@@ -23,6 +23,12 @@ const githubId = process.env.GITHUB_CLIENT_ID;
 const githubSecret = process.env.GITHUB_CLIENT_SECRET;
 
 export const auth = betterAuth({
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
+  },
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
