@@ -6,7 +6,7 @@ const ProductItem = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="block rounded-2xl bg-white p-4"
+      className="block rounded-2xl bg-white p-4 shadow-[0_8px_20px_rgba(15,23,42,0.08)] ring-1 ring-slate-100 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_18px_35px_rgba(15,23,42,0.12)] hover:ring-emerald-100"
     >
       <div className="flex items-center gap-2">
         <p className="rounded-2xl bg-[#f0f5f0] p-2 text-3xl">{product.image}</p>
@@ -29,22 +29,3 @@ const ProductItem = ({ product }: { product: Product }) => {
 
 export default ProductItem;
 
-// import Link from "next/link";
-// import { Product } from "@/types/product";
-
-// const ProductItem = ({ product }: { product: Product }) => {
-//   return (
-//     <Link
-//       href={`/product/${product.slug}`}
-//       className="block rounded-2xl bg-white p-4"
-//     >
-//       <div className="text-3xl">{product.image}</div>
-//       <h2 className="font-semibold">{product.nameBn}</h2>
-//       <p>
-//         ৳{product.today}/{product.unit}
-//       </p>
-//     </Link>
-//   );
-// };
-
-// export default ProductItem;
