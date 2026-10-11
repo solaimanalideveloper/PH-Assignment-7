@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
 import { getProductsByCategory } from "@/lib/data";
 import ProductItem from "@/components/ProductItem";
-import { Product } from "@/types/product";
 import SortDropdown from "@/components/SortDropdown";
-
-const toBn = (n: number | string) =>
-  String(n).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[+d]);
+import { Product } from "@/types/product";
+import { toBn } from "@/lib/format";
 
 const CategoryDetailPage = async ({
   params,
@@ -21,36 +19,35 @@ const CategoryDetailPage = async ({
   if (products.length === 0) notFound();
 
   const sorted = [...products];
-  if (sort === "price-asc") sorted.sort((a, b) => a.today - b.today);
-  if (sort === "price-desc") sorted.sort((a, b) => b.today - a.today);
-  if (sort === "name")
-    sorted.sort((a, b) => a.nameBn.localeCompare(b.nameBn, "bn"));
+  if (sort === "price-asc")
+    sorted.sort((a, b) => Number(a.today) - Number(b.today));
+  if (sort === "price-desc")
+    sorted.sort((a, b) => Number(b.today) - Number(a.today));
 
   const first = products[0];
 
   return (
-    <div className="bg-green-100 py-10">
-      <div className="container mx-auto max-w-5xl px-4">
-        {/* হেডার */}
-        <section className="mb-6 flex items-center gap-4 rounded-xl bg-white p-6">
-          <div className="text-5xl">{first.categoryIcon}</div>
+    <div className="bg-green-100 px-4 py-8 sm:py-10">
+      <div className="container mx-auto max-w-6xl">
+        <section className="mb-6 flex items-center gap-4 rounded-xl bg-white p-4 sm:p-6">
+          <div className="text-4xl sm:text-5xl">{first.categoryIcon}</div>
           <div>
-            <h1 className="text-2xl font-bold">{first.categoryNameBn}</h1>
+            <h1 className="text-xl font-bold sm:text-2xl">
+              {first.categoryNameBn}
+            </h1>
             <p className="text-sm text-gray-500">
               {toBn(products.length)}টি পণ্যের আজকের দাম ও পরিবর্তন
             </p>
           </div>
         </section>
 
-        {/* সাজান */}
         <SortDropdown current={sort} />
-        {/* SortDropdown আপনার আছে, নিচে ব্যাখ্যা দেখুন */}
 
-        <p className="mb-4 text-sm text-gray-500">
+        <p className="mb-4 text-sm text-gray-600">
           মোট {toBn(sorted.length)}টি পণ্য দেখানো হচ্ছে
         </p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((p) => (
             <ProductItem key={p.id} product={p} />
           ))}
