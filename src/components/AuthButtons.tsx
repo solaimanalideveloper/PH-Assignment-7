@@ -39,18 +39,24 @@ const AuthButtons = () => {
      return <div className="h-10 w-40 rounded-lg bg-gray-100 animate-pulse" />;
    }
 
-   if (!session) {
-     return (
-       <div className="flex gap-2 items-center">
-         <Link href="/sign-in" className="btn font-semibold text-[18px]">
-           সাইন ইন
-         </Link>
-         <Link href="/sign-up" className="btn font-semibold text-[18px]">
-           সাইন আপ
-         </Link>
-       </div>
-     );
-   }
+    if (!session) {
+      return (
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Link
+            href="/sign-in"
+            className="btn btn-sm font-semibold sm:btn-md sm:text-lg"
+          >
+            সাইন ইন
+          </Link>
+          <Link
+            href="/sign-up"
+            className="btn btn-sm font-semibold sm:btn-md sm:text-lg"
+          >
+            সাইন আপ
+          </Link>
+        </div>
+      );
+    }
 
   const { user } = session;
   const initial = user.name?.trim().charAt(0).toUpperCase() || "?";

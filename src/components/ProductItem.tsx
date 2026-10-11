@@ -2,10 +2,16 @@ import Link from "next/link";
 import { Product } from "@/types/product";
 import ChangeBadge from "./ChangeBadge";
 
-const ProductItem = ({ product }: { product: Product }) => {
+const ProductItem = ({
+  product,
+  isLoggedIn = true,
+}: {
+  product: Product;
+  isLoggedIn?: boolean;
+}) => {
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={isLoggedIn ? `/product/${product.slug}` : "/sign-in"}
       className="block rounded-2xl bg-white p-4 shadow-[0_8px_20px_rgba(15,23,42,0.08)] ring-1 ring-slate-100 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_18px_35px_rgba(15,23,42,0.12)] hover:ring-emerald-100"
     >
       <div className="flex items-center gap-2">
@@ -28,4 +34,3 @@ const ProductItem = ({ product }: { product: Product }) => {
 };
 
 export default ProductItem;
-

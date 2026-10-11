@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NavItem from "@/components/NavItem";
 import { ToastContainer } from "react-toastify";
-// import PriceTicker from "@/components/PriceTicker";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        <NavItem></NavItem>
+        <Suspense fallback={null}>
+          <NavItem />
+        </Suspense>
         {children}
         <ToastContainer position="top-right" autoClose={3000} />
         <Footer></Footer>

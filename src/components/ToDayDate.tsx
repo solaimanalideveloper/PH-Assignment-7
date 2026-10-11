@@ -4,14 +4,18 @@ import { useSyncExternalStore } from "react";
 
 const subscribe = () => () => {};
 
-const TodayDate = () => {
+const TodayDate = ({
+  className = "my-2 text-lg font-semibold text-[#05893E] sm:text-2xl",
+}: {
+  className?: string;
+}) => {
   const date = useSyncExternalStore(
     subscribe,
     () => new Date().toLocaleDateString("bn-BD", { dateStyle: "full" }),
     () => "",
   );
 
-  return <p className="my-2 text-2xl font-semibold text-[#05893E]">{date}</p>;
+  return <p className={className}>{date}</p>;
 };
 
 export default TodayDate;

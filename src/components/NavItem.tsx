@@ -1,28 +1,21 @@
-import Link from "next/link";
 import { getCategories } from "@/lib/data";
 import { Category } from "@/types/product";
+import CategoryLinks from "./CategoryLinks";
 import PriceTicker from "./PriceTicker";
 
 const NavItem = async () => {
-  const categories = await getCategories();
+  const categories: Category[] = await getCategories();
 
   return (
     <div>
-      <div className="container mx-auto my-5">
-        <div className="flex">
-          {categories.map((cat: Category) => (
-            <Link
-              key={cat.slug}
-              href={`/category/${cat.slug}`}
-              className="mx-3 flex items-center font-semibold"
-            >
-              <span className="mx-2">{cat.icon}</span>
-              <span>{cat.nameBn}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-      <PriceTicker></PriceTicker>
+      <CategoryLinks
+        categories={categories.map((c) => ({
+          slug: c.slug,
+          icon: c.icon,
+          nameBn: c.nameBn,
+        }))}
+      />
+      <PriceTicker />
     </div>
   );
 };
